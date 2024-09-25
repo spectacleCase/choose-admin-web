@@ -1,19 +1,43 @@
 import { createRouter, createWebHistory } from "vue-router";
-import type { RouteRecordRaw } from "vue-router";
+import LoginPage from "../pages/login/index.vue";
+import MainLayout from "../layouts/MainLayout.vue";
 
-// 懒加载
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
     path: "/",
-    component: () => import("@/pages/home/index.vue"),
+    redirect: "/login",
   },
   {
     path: "/login",
-    component: () => import("@/pages/login/index.vue"),
+    name: "Login",
+    component: LoginPage,
+  },
+  {
+    path: "/",
+    component: MainLayout,
+    children: [
+      {
+        path: "home",
+        name: "Home",
+        component: () => import("../pages/home/HomePage.vue"),
+      },
+      {
+        path: "monitor",
+        name: "Monitor",
+        component: () => import("../pages/home/text.vue"),
+      },
+      {
+        path: "content",
+        name: "Content",
+        component: () => import("../pages/home/text.vue"),
+      },
+    ],
   },
 ];
 
 export const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes,
 });
+
+export default router;

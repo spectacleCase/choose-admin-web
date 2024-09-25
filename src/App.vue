@@ -1,7 +1,9 @@
-<script setup lang="ts"></script>
-
 <template>
-  <router-view />
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
 
-<style scoped></style>
+<script setup lang="ts">
+// 不需要在这里导入 Sidebar
+</script>

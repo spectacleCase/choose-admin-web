@@ -1,12 +1,12 @@
 <template>
-  <div class="flex items-center justify-center w-screen h-screen">
+  <div class="flex justify-center items-center w-screen h-screen">
     <div class="w-full h-full">
       <div
-        class="relative w-screen h-screen p-6 bg-gray-100 bg-center bg-no-repeat bg-cover rounded-lg shadow-lg"
+        class="relative p-6 w-screen h-screen bg-gray-100 bg-center bg-no-repeat bg-cover rounded-lg shadow-lg"
         style="background-image: url('/src/assets/img/登录页1@2x.png')"
       >
         <div
-          class="absolute w-3/12 overflow-hidden transform translate-x-1/2 bg-white rounded-lg shadow-lg h-80 right-1/4 top-1/3 drop-shadow-lg"
+          class="overflow-hidden absolute top-1/3 right-1/4 w-3/12 h-80 bg-white rounded-lg shadow-lg drop-shadow-lg transform translate-x-1/2"
         >
           <div class="px-6 py-4">
             <div class="flex justify-center mt-2 mb-6">
@@ -15,54 +15,54 @@
 
             <Form @submit="handleLogin" :validation-schema="loginFormRules">
               <div class="h-14">
-                <div class="relative flex justify-center mt-0-4">
+                <div class="flex relative justify-center mt-0-4">
                   <Field
                     v-model="loginFormData.username"
                     name="username"
                     placeholder="请输入账号"
                     type="text"
-                    class="w-4/5 p-2 pl-10 border border-gray-300 rounded-md focus:border-sky-500"
+                    class="p-2 pl-10 w-4/5 rounded-md border border-gray-300 focus:border-sky-500"
                   />
                   <img
                     src="@/assets/img/用户名.png"
                     alt="Custom Icon"
                     width="20"
                     height="20"
-                    class="absolute transform -translate-y-1/2 left-14 top-1/2"
+                    class="absolute left-14 top-1/2 transform -translate-y-1/2"
                   />
                 </div>
                 <ErrorMessage
                   name="username"
-                  class="w-4/5 pl-10 text-sm text-red-500"
+                  class="pl-10 w-4/5 text-sm text-red-500"
                 />
               </div>
               <div class="h-14">
-                <div class="relative flex justify-center mt-4">
+                <div class="flex relative justify-center mt-4">
                   <Field
                     v-model="loginFormData.password"
                     name="password"
                     type="password"
                     placeholder="请输入密码"
-                    class="w-4/5 h-10 p-2 pl-10 border border-gray-300 rounded-md focus:border-sky-500"
+                    class="p-2 pl-10 w-4/5 h-10 rounded-md border border-gray-300 focus:border-sky-500"
                   />
                   <img
                     src="@/assets/img/解锁.png"
                     alt="Custom Icon"
                     width="20"
                     height="20"
-                    class="absolute transform -translate-y-1/2 left-14 top-1/2"
+                    class="absolute left-14 top-1/2 transform -translate-y-1/2"
                   />
                 </div>
                 <ErrorMessage
                   name="password"
-                  class="w-4/5 pl-10 text-sm text-red-500"
+                  class="pl-10 w-4/5 text-sm text-red-500"
                 />
               </div>
 
               <div class="flex justify-center mt-6">
                 <button
                   type="submit"
-                  class="w-4/5 p-2 mb-8 text-white bg-orange-300 rounded-md hover:bg-orange-400"
+                  class="p-2 mb-8 w-4/5 text-white bg-orange-300 rounded-md hover:bg-orange-400"
                   style="margin-bottom: -32px"
                 >
                   立即登录
@@ -128,7 +128,7 @@ const handleLogin = (values: Record<string, any>) => {
     .login(typedValues)
     .then(() => {
       showMessage({ str: "登录成功", type: "success" });
-      router.push({ path: "/" });
+      router.push({ path: "/home" });
     });
   console.log(typedValues);
 };
