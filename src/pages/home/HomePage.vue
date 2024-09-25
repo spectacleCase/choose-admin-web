@@ -70,6 +70,7 @@
         </button>
         <button
           class="px-4 py-2 font-bold text-white bg-purple-500 rounded hover:bg-purple-600"
+          @click="getRouter('/monitor/performance')"
         >
           系统监控
         </button>
@@ -179,6 +180,10 @@ const orderStatOption = ref({
 onMounted(() => {
   // 例如，从API获取数据并更新图表选项
 });
+
+function getRouter(path: string) {
+  console.log(path);
+}
 </script>
 
 <style scoped>

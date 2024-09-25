@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex fixed top-0 left-0 flex-col w-60 h-screen text-white"
+    class="fixed top-0 left-0 flex flex-col h-screen text-white w-60"
     style="background-color: #140f21"
   >
     <div class="flex-1 p-4 mt-6">
@@ -13,12 +13,12 @@
         <ul>
           <li v-for="item in menuItems" :key="item.route" class="mb-2">
             <div
-              class="overflow-hidden relative rounded-lg cursor-pointer"
+              class="relative overflow-hidden rounded-lg cursor-pointer"
               :class="getItemClasses(item)"
               @click="handleItemClick($event, item)"
             >
               <div
-                class="flex items-center px-4 py-2 w-full focus:outline-none"
+                class="flex items-center w-full px-4 py-2 focus:outline-none"
               >
                 <img
                   v-if="item.icon"
@@ -44,13 +44,13 @@
                   class="mb-2"
                 >
                   <div
-                    class="overflow-hidden relative rounded-lg cursor-pointer"
+                    class="relative overflow-hidden rounded-lg cursor-pointer"
                     :class="getItemClasses(child)"
                     @click.stop="handleChildItemClick($event, child, item)"
                   >
                     <router-link
                       :to="child.route"
-                      class="flex items-center px-4 py-2 w-full focus:outline-none"
+                      class="flex items-center w-full px-4 py-2 focus:outline-none"
                     >
                       <span class="ml-2">{{ child.text }}</span>
                     </router-link>
@@ -63,14 +63,14 @@
         </ul>
       </nav>
     </div>
-    <div class="p-4" style="background-color: #140f21">
+    <div class="p-4 mb-5" style="background-color: #140f21">
       <div
-        class="overflow-hidden relative rounded-lg cursor-pointer hover:bg-indigo-600 focus:bg-indigo-300"
+        class="relative overflow-hidden rounded-lg cursor-pointer hover:bg-indigo-600 focus:bg-indigo-300"
         @click="handleLogout"
       >
         <a
           href="#"
-          class="flex items-center px-4 py-2 w-full focus:outline-none"
+          class="flex items-center w-full px-4 py-2 focus:outline-none"
         >
           <img
             :src="getImageUrl('开关.png')"
@@ -98,14 +98,14 @@ const menuItems = ref([
   {
     text: "系统监控",
     route: "/monitor",
-    icon: "",
+    icon: "系统.png",
     expanded: false,
     children: [
       { text: "性能监视", route: "/monitor/performance" },
       { text: "Redis监控", route: "/monitor/redis" },
     ],
   },
-  { text: "内容管理", route: "/content", icon: "" },
+  { text: "内容管理", route: "/content", icon: "_内容2.png" },
 ]);
 
 // 新增：使用 localStorage 来保存和恢复菜单展开状态
