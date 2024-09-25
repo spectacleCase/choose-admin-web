@@ -24,7 +24,19 @@ const routes = [
       {
         path: "monitor",
         name: "Monitor",
-        component: () => import("../pages/home/text.vue"),
+        component: () => import("@/pages/home/index.vue"),
+        children: [
+          {
+            path: "performance",
+            name: "PerformanceMonitor",
+            component: () => import("@/pages/property/cache/index.vue"),
+          },
+          {
+            path: "redis",
+            name: "RedisMonitor",
+            component: () => import("@/pages/property/server/index.vue"),
+          },
+        ],
       },
       {
         path: "content",

@@ -1,4 +1,4 @@
-import { router } from "@/router/idnex";
+import { router } from "@/router";
 import { getToken, removeToken } from "@/utils/cache/token";
 import { showMessage } from "@/components/message/message";
 
