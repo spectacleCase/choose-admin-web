@@ -105,7 +105,13 @@ const menuItems = ref([
       { text: "Redis监控", route: "/monitor/redis" },
     ],
   },
-  { text: "内容管理", route: "/content", icon: "_内容2.png" },
+  { text: "内容管理", route: "/content", icon: "_内容2.png",expanded: false,
+    children: [
+        { text: "店铺审核", route: "/content/store" },
+        { text: "菜品审核", route: "/content/food" },
+        { text: "店铺管理", route: "/content/addstore" },
+    ],
+   },
 ]);
 
 // 新增：使用 localStorage 来保存和恢复菜单展开状态

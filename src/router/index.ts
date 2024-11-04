@@ -41,7 +41,24 @@ const routes = [
       {
         path: "content",
         name: "Content",
-        component: () => import("../pages/home/text.vue"),
+        //component: () => import("../pages/home/text.vue"),
+        children: [
+          {
+            path: "store",
+            name: "storereview",
+            component: () => import("@/pages/property/store/index.vue"),
+          },
+          {
+            path: "food",
+            name: "foodreview",
+            component: () => import("@/pages/property/food/index.vue"),
+          },
+          {
+            path: "addstore",
+            name: "addstore",
+            component: () => import("@/pages/property/addstore/index.vue"),
+          },
+        ],
       },
     ],
   },
