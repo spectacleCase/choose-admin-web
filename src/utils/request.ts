@@ -1,4 +1,5 @@
 import { showMessage } from "@/components/message/message";
+import { getToken } from "./cache/token";
 import axios from "axios";
 import type {
   AxiosInstance,
@@ -15,15 +16,15 @@ interface RequestConfig extends AxiosRequestConfig {
 // 创建 axios 实例
 const service: AxiosInstance = axios.create({
   baseURL: "/api",
-  timeout: 1000, // 请求超时时间
+  timeout: 10000, // 请求超时时间
 });
 
 // 请求拦截器
 service.interceptors.request.use(
   (config: RequestConfig) => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
     if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+      config.headers["AdminToken"] = `${token}`;
     }
 
     // 处理自定义配置项

@@ -29,12 +29,12 @@ const routes = [
           {
             path: "performance",
             name: "PerformanceMonitor",
-            component: () => import("@/pages/property/cache/index.vue"),
+            component: () => import("@/pages/property/server/index.vue"),
           },
           {
             path: "redis",
             name: "RedisMonitor",
-            component: () => import("@/pages/property/server/index.vue"),
+            component: () => import("@/pages/property/cache/index.vue"),
           },
         ],
       },
@@ -46,17 +46,17 @@ const routes = [
           {
             path: "store",
             name: "storereview",
-            component: () => import("@/pages/property/store/index.vue"),
+            component: () => import("@/pages/shop/store/index.vue"),
           },
           {
             path: "food",
             name: "foodreview",
-            component: () => import("@/pages/property/food/index.vue"),
+            component: () => import("@/pages/shop/food/index.vue"),
           },
           {
             path: "addstore",
             name: "addstore",
-            component: () => import("@/pages/property/addstore/index.vue"),
+            component: () => import("@/pages/shop/addstore/index.vue"),
           },
         ],
       },

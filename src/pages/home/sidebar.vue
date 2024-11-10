@@ -88,6 +88,8 @@
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { logoutApi } from "@/api/auth/auth";
+import { useUserStore } from "@/stores/modules/user";
 
 const route = useRoute();
 const router = useRouter();
@@ -105,13 +107,17 @@ const menuItems = ref([
       { text: "Redis监控", route: "/monitor/redis" },
     ],
   },
-  { text: "内容管理", route: "/content", icon: "_内容2.png",expanded: false,
+  {
+    text: "内容管理",
+    route: "/content",
+    icon: "_内容2.png",
+    expanded: false,
     children: [
-        { text: "店铺审核", route: "/content/store" },
-        { text: "菜品审核", route: "/content/food" },
-        { text: "店铺管理", route: "/content/addstore" },
+      { text: "店铺审核", route: "/content/store" },
+      { text: "菜品审核", route: "/content/food" },
+      { text: "店铺管理", route: "/content/addstore" },
     ],
-   },
+  },
 ]);
 
 // 新增：使用 localStorage 来保存和恢复菜单展开状态
@@ -210,9 +216,11 @@ function getImageUrl(name: string) {
   return new URL(`../../assets/img/${name}`, import.meta.url).href;
 }
 
-function handleLogout() {
+async function handleLogout() {
   // 实现退出登录逻辑
   console.log("退出登录");
+  await useUserStore().logout();
+  router.push({ path: "/login" });
 }
 </script>
 
