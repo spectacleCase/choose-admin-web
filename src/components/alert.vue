@@ -1,3 +1,4 @@
+<!-- 模态对话框 -->
 <!-- src/components/Alert.vue -->
 <template>
   <div

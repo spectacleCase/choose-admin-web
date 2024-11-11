@@ -1,3 +1,4 @@
+<!-- 弹出消息框 -->
 <template>
   <div class="pop-message" :style="style[type]" v-show="visible">
     <img

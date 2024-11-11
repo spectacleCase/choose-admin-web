@@ -1,3 +1,4 @@
+<!-- 公共饼图 -->
 <template>
   <div ref="chartContainer" style="width: 100%; height: 100%;"></div>
 </template>

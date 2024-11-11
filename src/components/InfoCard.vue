@@ -1,5 +1,6 @@
+<!-- 卡片 -->
 <template>
-  <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+  <div class="p-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
     <h3 class="mb-2 text-sm font-semibold text-gray-500">{{ title }}</h3>
     <p :class="valueClass">{{ value }}</p>
   </div>

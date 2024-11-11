@@ -7,8 +7,18 @@
       <div class="p-4 bg-white rounded-lg shadow">
         <h2 class="mb-3 text-lg font-semibold">待办事项</h2>
         <ul class="space-y-2">
-          <li>待审核菜品：<span class="font-bold text-red-500">5</span> 个</li>
-          <li>待审核图片：<span class="font-bold text-red-500">12</span> 张</li>
+          <li>
+            待审核菜品：<span class="font-bold text-red-500">{{
+              todoItems.pendingDishes
+            }}</span>
+            个
+          </li>
+          <li>
+            待审核店铺：<span class="font-bold text-red-500">{{
+              todoItems.pendingShop
+            }}</span>
+            个
+          </li>
         </ul>
       </div>
 
@@ -16,9 +26,21 @@
       <div class="p-4 bg-white rounded-lg shadow">
         <h2 class="mb-3 text-lg font-semibold">系统使用率</h2>
         <ul class="space-y-2">
-          <li>CPU：<span class="font-bold text-green-500">45%</span></li>
-          <li>内存：<span class="font-bold text-yellow-500">78%</span></li>
-          <li>JVM：<span class="font-bold text-blue-500">62%</span></li>
+          <li>
+            CPU：<span class="font-bold text-green-500"
+              >{{ systemUsage.cpu }}%</span
+            >
+          </li>
+          <li>
+            内存：<span class="font-bold text-yellow-500"
+              >{{ systemUsage.memory }}%</span
+            >
+          </li>
+          <li>
+            JVM：<span class="font-bold text-blue-500">{{
+              systemUsage.jvm
+            }}</span>
+          </li>
         </ul>
       </div>
 
@@ -26,29 +48,35 @@
       <div class="p-4 bg-white rounded-lg shadow">
         <h2 class="mb-3 text-lg font-semibold">API 性能</h2>
         <p>
-          平均响应时间：<span class="font-bold text-purple-500">120ms</span>
+          平均响应时间：<span class="font-bold text-purple-500"
+            >{{ apiPerformance.averageResponseTime }}ms</span
+          >
         </p>
       </div>
 
       <!-- 数据概览 -->
-      <div class="col-span-full p-4 bg-white rounded-lg shadow">
+      <div class="p-4 bg-white rounded-lg shadow col-span-full">
         <h2 class="mb-3 text-lg font-semibold">数据概览</h2>
         <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
           <div>
             <p class="text-gray-600">总用户数</p>
-            <p class="text-2xl font-bold">12,345</p>
+            <p class="text-2xl font-bold">{{ dataOverview.totalUser }}</p>
           </div>
           <div>
             <p class="text-gray-600">今日活跃用户</p>
-            <p class="text-2xl font-bold">1,234</p>
+            <p class="text-2xl font-bold">
+              {{ dataOverview.activeUsersToday }}
+            </p>
           </div>
           <div>
             <p class="text-gray-600">总菜品数</p>
-            <p class="text-2xl font-bold">5,678</p>
+            <p class="text-2xl font-bold">{{ dataOverview.totalDishes }}</p>
           </div>
           <div>
-            <p class="text-gray-600">今日订单数</p>
-            <p class="text-2xl font-bold">789</p>
+            <p class="text-gray-600">今日预测数</p>
+            <p class="text-2xl font-bold">
+              {{ dataOverview.predictionToday }}
+            </p>
           </div>
         </div>
       </div>
@@ -86,7 +114,7 @@
           <v-chart class="chart" :option="userGrowthOption" />
         </div>
         <div class="p-4 bg-white rounded-lg shadow">
-          <h3 class="mb-2 font-semibold text-md">订单统计</h3>
+          <h3 class="mb-2 font-semibold text-md">预测统计</h3>
           <v-chart class="chart" :option="orderStatOption" />
         </div>
       </div>
@@ -99,6 +127,7 @@ import { ref, onMounted } from "vue";
 import VChart, { THEME_KEY } from "vue-echarts";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
+import common from "@/api/common/common";
 import { LineChart, BarChart, PieChart } from "echarts/charts";
 import {
   GridComponent,
@@ -106,6 +135,7 @@ import {
   LegendComponent,
   TitleComponent,
 } from "echarts/components";
+import type { List } from "echarts";
 
 use([
   CanvasRenderer,
@@ -118,6 +148,60 @@ use([
   TitleComponent,
 ]);
 
+interface TodoItems {
+  pendingDishes: number;
+  pendingShop: number;
+}
+
+interface SystemUsage {
+  cpu: number;
+  memory: number;
+  jvm: number;
+}
+
+interface ApiPerformance {
+  averageResponseTime: number;
+}
+
+interface DataOverview {
+  totalUser: number;
+  activeUsersToday: number;
+  totalDishes: number;
+  predictionToday: number;
+}
+
+interface DashboardData {
+  todoItems: TodoItems;
+  systemUsage: SystemUsage;
+  apiPerformance: ApiPerformance;
+  dataOverview: DataOverview;
+}
+
+const todoItems = ref<TodoItems>({
+  pendingDishes: 0,
+  pendingShop: 0,
+});
+
+const recommendList = ref<List<any>>();
+  
+
+const systemUsage = ref<SystemUsage>({
+  cpu: 0,
+  memory: 0,
+  jvm: 0,
+});
+
+const apiPerformance = ref<ApiPerformance>({
+  averageResponseTime: 0,
+});
+
+const dataOverview = ref<DataOverview>({
+  totalUser: 0,
+  activeUsersToday: 0,
+  totalDishes: 0,
+  predictionToday: 0,
+});
+
 const userGrowthOption = ref({
   tooltip: {
     trigger: "axis",
@@ -127,7 +211,7 @@ const userGrowthOption = ref({
   },
   xAxis: {
     type: "category",
-    data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月"],
+    data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
   },
   yAxis: {
     type: "value",
@@ -148,37 +232,43 @@ const userGrowthOption = ref({
 
 const orderStatOption = ref({
   tooltip: {
-    trigger: "item",
+    trigger: "axis",
   },
   legend: {
-    orient: "vertical",
-    left: "left",
+    data: ["预测数"],
+  },
+  xAxis: {
+    type: "category",
+    data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+  },
+  yAxis: {
+    type: "value",
   },
   series: [
     {
-      name: "订单类型",
-      type: "pie",
-      radius: "50%",
-      data: [
-        { value: 1048, name: "外卖订单" },
-        { value: 735, name: "堂食订单" },
-        { value: 580, name: "自提订单" },
-        { value: 484, name: "预订订单" },
-      ],
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: "rgba(0, 0, 0, 0.5)",
-        },
-      },
+      name: "预测数",
+      type: "line",
+      data: recommendList,
     },
   ],
 });
 
-// 这里可以添加获取实时数据的逻辑
-onMounted(() => {
-  // 例如，从API获取数据并更新图表选项
+// 模拟获取数据
+const fetchDashboardData = (): any => {
+  return common.getIndex(null);
+};
+
+onMounted(async () => {
+  const data = await fetchDashboardData();
+
+  console.log(data);
+
+  todoItems.value = data.data.todoItems;
+  systemUsage.value = data.data.systemUsage;
+  apiPerformance.value = data.data.apiPerformance;
+  dataOverview.value = data.data.dataOverview;
+  recommendList.value = data.data.recommendList;
+  console.log(data.data.recommendList);
 });
 
 function getRouter(path: string) {

@@ -87,37 +87,37 @@ interface RedisInfo {
 }
 
 const redisInfo = ref<RedisInfo>({
-  redis_version: "5.0.14.1",
-  redis_mode: "standalone",
-  tcp_port: "6379",
-  connected_clients: "1",
-  uptime_in_seconds: "978",
-  used_memory_human: "717.95K",
-  used_cpu_sys: "0.015625",
-  maxmemory_human: "0B",
-  aof_enabled: "0",
-  rdb_last_bgsave_status: "ok",
-  total_net_input_bytes: "1982",
-  total_net_output_bytes: "8899",
-  used_memory: "735176",
-  used_memory_peak: "735176",
-  used_memory_lua: "37888",
-  used_memory_scripts: "0",
-  maxmemory: "0",
+  redis_version: "",
+  redis_mode: "",
+  tcp_port: "",
+  connected_clients: "",
+  uptime_in_seconds: "",
+  used_memory_human: "",
+  used_cpu_sys: "",
+  maxmemory_human: "",
+  aof_enabled: "",
+  rdb_last_bgsave_status: "",
+  total_net_input_bytes: "",
+  total_net_output_bytes: "",
+  used_memory: "",
+  used_memory_peak: "",
+  used_memory_lua: "",
+  used_memory_scripts: "",
+  maxmemory: "",
 });
 
 const commandStats = ref([
-  { name: "set", value: 1 },
-  { name: "pexpire", value: 1 },
-  { name: "ping", value: 1 },
-  { name: "get", value: 14 },
-  { name: "ttl", value: 2 },
-  { name: "info", value: 5 },
-  { name: "dbsize", value: 2 },
-  { name: "setex", value: 2 },
+  { name: "", value: 0 },
+  { name: "", value: 0 },
+  { name: "", value: 0 },
+  { name: "", value: 0 },
+  { name: "", value: 0 },
+  { name: "", value: 0 },
+  { name: "", value: 0 },
+  { name: "", value: 0 },
 ]);
 
-const dbSize = ref(14);
+const dbSize = ref(0);
 
 const memoryInfo = computed(() => [
   { name: "已用内存", value: parseInt(redisInfo.value.used_memory) },

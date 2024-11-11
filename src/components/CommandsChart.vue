@@ -1,10 +1,11 @@
+<!-- 饼图 -->
 <template>
-  <div ref="chartContainer" style="width: 100%; height: 100%;"></div>
+  <div ref="chartContainer" style="width: 100%; height: 100%"></div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, onUnmounted } from 'vue';
-import * as echarts from 'echarts';
+import { ref, onMounted, watch, onUnmounted } from "vue";
+import * as echarts from "echarts";
 
 const props = defineProps<{
   data: { name: string; value: number }[];
@@ -26,32 +27,32 @@ function updateChart() {
   if (chart) {
     chart.setOption({
       title: {
-        text: '命令统计',
-        left: 'center'
+        text: "命令统计",
+        left: "center",
       },
       tooltip: {
-        trigger: 'item',
-        formatter: '{a} <br/>{b}: {c} ({d}%)'
+        trigger: "item",
+        formatter: "{a} <br/>{b}: {c} ({d}%)",
       },
       legend: {
-        orient: 'vertical',
-        left: 'left'
+        orient: "vertical",
+        left: "left",
       },
       series: [
         {
-          name: '命令执行次数',
-          type: 'pie',
-          radius: '50%',
+          name: "命令执行次数",
+          type: "pie",
+          radius: "50%",
           data: props.data,
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
               shadowOffsetX: 0,
-              shadowColor: 'rgba(0, 0, 0, 0.5)'
-            }
-          }
-        }
-      ]
+              shadowColor: "rgba(0, 0, 0, 0.5)",
+            },
+          },
+        },
+      ],
     });
   }
 }
