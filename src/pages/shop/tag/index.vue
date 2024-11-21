@@ -1,45 +1,45 @@
 <template>
   <div class="p-6 bg-gray-100">
-    <h1 class="mb-6 text-2xl font-bold text-gray-800">店铺管理</h1>
+    <h1 class="mb-6 text-2xl font-bold text-gray-800">标签管理</h1>
 
-    <!-- 添加店铺表单 -->
+    <!-- 添加标签表单 -->
     <div class="mb-6 bg-white rounded-lg shadow-md p-4">
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">添加新店铺</h2>
-      <form @submit.prevent="addStore" class="space-y-4">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">添加新标签</h2>
+      <form @submit.prevent="addTag" class="space-y-4">
         <div>
-          <label for="storeName" class="block text-sm font-medium text-gray-700">店铺名称</label>
-          <input v-model="newStore.name" type="text" id="storeName"
+          <label for="tagName" class="block text-sm font-medium text-gray-700">标签名称</label>
+          <input v-model="newTag.name" type="text" id="tagName"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
         </div>
         <div>
           <label for="storeAddress" class="block text-sm font-medium text-gray-700">店铺地址</label>
-          <input v-model="newStore.address" type="text" id="storeAddress"
+          <input v-model="newTag.parenttag" type="text" id="storeAddress"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
         </div>
         <button type="submit"
           class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-          添加店铺
+          添加标签
         </button>
       </form>
     </div>
 
     <!-- 查找功能 -->
     <div class="mb-6 bg-white rounded-lg shadow-md p-4">
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">查找店铺</h2>
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">查找标签</h2>
       <div class="flex space-x-4">
         <input v-model="searchTerm" type="text" placeholder="输入店铺名称或地址"
           class="flex-grow px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <button @click="searchStores"
+        <button @click="searchTags"
           class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
           查找
         </button>
       </div>
     </div>
 
-    <!-- 店铺列表 -->
+    <!-- 标签列表 -->
     <div class="bg-white rounded-lg shadow-md">
       <div class="p-4 border-b">
-        <h2 class="text-xl font-semibold text-gray-700">店铺列表</h2>
+        <h2 class="text-xl font-semibold text-gray-700">标签列表</h2>
       </div>
       <div class="p-4">
         <table class="min-w-full divide-y divide-gray-200">
@@ -51,12 +51,13 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="store in paginatedStores" :key="store.id">
-              <td class="px-6 py-4 whitespace-nowrap">{{ store.name }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ store.address }}</td>
+            <tr v-for="tag in paginatedTags" :key="tag.id">
+              <td class="px-6 py-4 whitespace-nowrap">{{ tag.name }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ tag.parentId }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ tag.status }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <button @click="editStore(store)" class="text-indigo-600 hover:text-indigo-900 mr-2">编辑</button>
-                <button @click="deleteStore(store.id)" class="text-red-600 hover:text-red-900">删除</button>
+                <button @click="editTag(tag)" class="text-indigo-600 hover:text-indigo-900 mr-2">编辑</button>
+                <button @click="deleteTag(tag.id)" class="text-red-600 hover:text-red-900">删除</button>
               </td>
             </tr>
           </tbody>
@@ -122,20 +123,20 @@
       </div>
     </div>
 
-    <!-- 编辑店铺弹窗 -->
-    <div v-if="editingStore"
+    <!-- 编辑标签弹窗 -->
+    <div v-if="editingTag"
       class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
       <div class="bg-white p-5 rounded-lg shadow-xl w-96">
-        <h3 class="text-lg font-semibold mb-4">编辑店铺</h3>
-        <form @submit.prevent="updateStore" class="space-y-4">
+        <h3 class="text-lg font-semibold mb-4">编辑标签</h3>
+        <form @submit.prevent="updateTag" class="space-y-4">
           <div>
-            <label for="editStoreName" class="block text-sm font-medium text-gray-700">店铺名称</label>
-            <input v-model="editingStore.name" type="text" id="editStoreName"
+            <label for="editTagName" class="block text-sm font-medium text-gray-700">标签名称</label>
+            <input v-model="editingTag.name" type="text" id="editTagName"
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
           </div>
           <div>
-            <label for="editStoreAddress" class="block text-sm font-medium text-gray-700">店铺地址</label>
-            <input v-model="editingStore.address" type="text" id="editStoreAddress"
+            <label for="editTagParentId" class="block text-sm font-medium text-gray-700">店铺地址</label>
+            <input v-model="editingTag.parentId" type="text" id="editTagParentId"
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
           </div>
           <div class="flex justify-end space-x-2">
@@ -153,88 +154,96 @@
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, toRaw, computed } from 'vue'
 
-interface Store {
-  id: number;
-  name: string;
-  address: string;
+interface Tag {
+  id: number
+  name: string
+  parentId: number
+  status: number
 }
-
-const stores = ref<Store[]>([
-  { id: 1, name: '示例店铺1', address: '示例地址1' },
-  { id: 2, name: '示例店铺2', address: '示例地址2' },
-  { id: 3, name: '示例店铺3', address: '示例地址3' },
-  { id: 4, name: '示例店铺4', address: '示例地址4' },
-  { id: 5, name: '示例店铺5', address: '示例地址5' },
-  { id: 6, name: '示例店铺6', address: '示例地址6' },
-  { id: 7, name: '示例店铺7', address: '示例地址7' },
-  { id: 8, name: '示例店铺8', address: '示例地址8' },
-  { id: 9, name: '示例店铺9', address: '示例地址9' },
-  { id: 10, name: '示例店铺10', address: '示例地址10' },
-  { id: 11, name: '示例店铺11', address: '示例地址11' },
-  { id: 12, name: '示例店铺12', address: '示例地址12' },
-  { id: 13, name: '示例店铺13', address: '示例地址13' },
-  { id: 14, name: '示例店铺14', address: '示例地址14' },
-  { id: 15, name: '示例店铺15', address: '示例地址15' },
+const tags = reactive([
+  { id: 1, name: '标签1', parentId: 0, status: 0 },
+  { id: 2, name: '标签2', parentId: 0, status: 0 },
+  { id: 3, name: '标签3', parentId: 0, status: 0 },
+  { id: 4, name: '标签4', parentId: 0, status: 0 },
+  { id: 5, name: '标签5', parentId: 0, status: 0 },
+  { id: 6, name: '标签6', parentId: 0, status: 0 },
+  { id: 7, name: '标签7', parentId: 0, status: 0 },
 ]);
 
-const newStore = reactive({
+const newTag = reactive({
   name: '',
-  address: '',
-});
+  parentId: 0,
+  status: 0
+})
 
-const editingStore = ref<Store | null>(null);
+const editingTag = ref<Tag | null>(null);
 
-const addStore = () => {
-  const id = stores.value.length + 1;
-  stores.value.push({ id, ...newStore });
-  newStore.name = '';
-  newStore.address = '';
+const addTag = () => {
+  const id = tags.length + 1
+  tags.push({ id, ...newTag });
+  newTag.name = '';
+  newTag.parentId = 0;
+  newTag.status = 0;
+}
+const editTag = (tag: Tag) => {
+  editingTag.value = { ...tag };
 };
 
-const editStore = (store: Store) => {
-  editingStore.value = { ...store };
-};
-
-const updateStore = () => {
-  if (editingStore.value) {
-    const index = stores.value.findIndex(s => s.id === editingStore.value!.id);
+const updateTag = () => {
+  if (editingTag.value) {
+    const index = tags.findIndex(s => s.id === editingTag.value!.id);
     if (index !== -1) {
-      stores.value[index] = { ...editingStore.value };
+      tags[index] = { ...editingTag.value };
     }
-    editingStore.value = null;
+    editingTag.value = null;
   }
 };
 
 // 查找功能
-const searchTerm = ref('');
-const filteredStores = computed(() => {
-  if (!searchTerm.value) return stores.value;
-  const lowercasedTerm = searchTerm.value.toLowerCase();
-  return stores.value.filter(store =>
-    store.name.toLowerCase().includes(lowercasedTerm) ||
-    store.address.toLowerCase().includes(lowercasedTerm)
+const searchTerm = reactive({
+  name: '',
+  parentId: 0,
+  status: 0
+})
+const toLowerCaseReactiveObject = (obj: any) => {
+  for (const key in obj) {
+    if (typeof obj[key] === 'string') {
+      obj[key] = obj[key].toLowerCase();
+    }
+    if (typeof obj[key] === 'number') {
+      obj[key] = obj[key].toString().toLowerCase();
+    }
+  }
+  return obj;
+};
+
+const filteredTags = computed(() => {
+  if (!searchTerm) return tags;
+  const lowercasedTerm = toLowerCaseReactiveObject(toRaw(searchTerm));
+  return tags.filter(tag =>
+    tag.name.toLowerCase().includes(lowercasedTerm.name) ||
+    tag.parentId.toString().toLowerCase().includes(lowercasedTerm.parentId)
   );
 });
 
-const searchStores = () => {
+const searchTags = () => {
   currentPage.value = 1; // 重置到第一页
 };
 
 // 分页相关的状态
 const currentPage = ref(1);
 const pageSize = ref(10);
-const totalItems = computed(() => filteredStores.value.length);
+const totalItems = computed(() => filteredTags.value.length);
 const totalPages = computed(() => Math.ceil(totalItems.value / pageSize.value));
 
-// 计算当前页面显示的店铺列表
-const paginatedStores = computed(() => {
+// 计算当前页面显示的标签列表
+const paginatedTags = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value;
   const end = start + pageSize.value;
-  return filteredStores.value.slice(start, end);
+  return filteredTags.value.slice(start, end);
 });
 
 // 翻页函数
@@ -259,14 +268,10 @@ const nextPage = () => {
 };
 
 const cancelEdit = () => {
-  editingStore.value = null;
+  editingTag.value = null;
 };
 
-const deleteStore = (id: number) => {
-  stores.value = stores.value.filter(store => store.id !== id);
+const deleteTag = (id: number) => {
+  tags.splice(tags.findIndex(tag => tag.id === id), 1);
 };
 </script>
-
-<style scoped>
-/* 可以添加额外的样式 */
-</style>

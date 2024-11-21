@@ -58,6 +58,11 @@ const routes = [
             name: "addstore",
             component: () => import("@/pages/shop/addstore/index.vue"),
           },
+          {
+            path:"addtag",
+            name:"addtag",
+            component:()=>import("@/pages/shop/tag/index.vue")
+          }
         ],
       },
     ],
