@@ -69,6 +69,8 @@ Initial commit
 
 ## 仓库链接
 
+- 🌐 **中台仓库**：[中台仓库链接](https://gitee.com/lzt_luo/choose-admin-web)
+- 📱 **微信小程序仓库**：[微信小程序仓库链接](https://gitee.com/lzt_luo/choose-wexinapp)
 - 🖥️ **后端仓库**：[后端仓库链接](https://gitee.com/lzt_luo/choose)
 
 ## 🌟
