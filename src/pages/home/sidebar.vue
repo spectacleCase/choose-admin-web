@@ -5,7 +5,7 @@
   >
     <div class="flex-1 p-4 mt-6">
       <div class="ml-4">
-        <h2 class="text-xl font-bold">御选</h2>
+        <h2 class="text-xl font-bold">WeChoice</h2>
         <p class="text-xs">管理平台</p>
       </div>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="p-6 home-page">
-    <h1 class="mb-6 text-2xl font-bold">欢迎来到御选管理平台</h1>
+    <h1 class="mb-6 text-2xl font-bold">欢迎来到WeChoice管理平台</h1>
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       <!-- 待办事项 -->
@@ -183,7 +183,6 @@ const todoItems = ref<TodoItems>({
 });
 
 const recommendList = ref<List<any>>();
-  
 
 const systemUsage = ref<SystemUsage>({
   cpu: 0,
