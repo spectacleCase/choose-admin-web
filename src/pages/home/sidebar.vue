@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed top-0 left-0 flex flex-col h-screen text-white w-60"
+    class="flex fixed top-0 left-0 flex-col w-60 h-screen text-white"
     style="background-color: #140f21"
   >
     <div class="flex-1 p-4 mt-6">
@@ -13,12 +13,12 @@
         <ul>
           <li v-for="item in menuItems" :key="item.route" class="mb-2">
             <div
-              class="relative overflow-hidden rounded-lg cursor-pointer"
+              class="overflow-hidden relative rounded-lg cursor-pointer"
               :class="getItemClasses(item)"
               @click="handleItemClick($event, item)"
             >
               <div
-                class="flex items-center w-full px-4 py-2 focus:outline-none"
+                class="flex items-center px-4 py-2 w-full focus:outline-none"
               >
                 <img
                   v-if="item.icon"
@@ -44,13 +44,13 @@
                   class="mb-2"
                 >
                   <div
-                    class="relative overflow-hidden rounded-lg cursor-pointer"
+                    class="overflow-hidden relative rounded-lg cursor-pointer"
                     :class="getItemClasses(child)"
                     @click.stop="handleChildItemClick($event, child, item)"
                   >
                     <router-link
                       :to="child.route"
-                      class="flex items-center w-full px-4 py-2 focus:outline-none"
+                      class="flex items-center px-4 py-2 w-full focus:outline-none"
                     >
                       <span class="ml-2">{{ child.text }}</span>
                     </router-link>
@@ -65,12 +65,12 @@
     </div>
     <div class="p-4 mb-5" style="background-color: #140f21">
       <div
-        class="relative overflow-hidden rounded-lg cursor-pointer hover:bg-indigo-600 focus:bg-indigo-300"
+        class="overflow-hidden relative rounded-lg cursor-pointer hover:bg-indigo-600 focus:bg-indigo-300"
         @click="handleLogout"
       >
         <a
           href="#"
-          class="flex items-center w-full px-4 py-2 focus:outline-none"
+          class="flex items-center px-4 py-2 w-full focus:outline-none"
         >
           <img
             :src="getImageUrl('开关.png')"
@@ -116,6 +116,7 @@ const menuItems = ref([
       { text: "店铺审核", route: "/content/store" },
       { text: "菜品审核", route: "/content/food" },
       { text: "店铺管理", route: "/content/addstore" },
+      { text: "标签管理", route: "/content/tag" },
     ],
   },
 ]);
